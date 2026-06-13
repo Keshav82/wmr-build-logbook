@@ -63,8 +63,7 @@
                  Wheeled Mobile Robot},
   number      = {WMR-BL-001},
   year        = {2026},
-  note        = {Available: https://Keshav82.github.io/wmr-build-logbook/},
-  doi         = {10.5281/zenodo.XXXXXXX}
+  note        = {Available: https://Keshav82.github.io/wmr-build-logbook/}
 }
 ```
 

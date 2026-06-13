@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WMR Build Logbook — Indoor Boundary Mapping</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Noto Sans',Arial,sans-serif;font-size:16px;color:#363636;background:#fff;line-height:1.6;}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #e0e0e0;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px;box-shadow:0 1px 6px rgba(0,0,0,.07);}
+    .nav-brand{font-family:'Google Sans',Arial,sans-serif;font-weight:700;font-size:15px;color:#363636;text-decoration:none;}
+    .nav-links{display:flex;gap:4px;flex-wrap:wrap;}
+    .nav-links a{font-size:13px;color:#4a4a4a;text-decoration:none;padding:5px 10px;border-radius:4px;transition:background .15s;}
+    .nav-links a:hover{background:#f0f0f0;color:#209CEE;}
+
+    /* HERO */
+    .hero{background:linear-gradient(135deg,#f8f9fa 0%,#e8f0fb 100%);padding:60px 24px 44px;text-align:center;border-bottom:1px solid #dde5f0;}
+    .hero-badge{display:inline-block;background:#209CEE;color:#fff;font-size:11px;font-weight:700;letter-spacing:1.2px;padding:4px 16px;border-radius:20px;text-transform:uppercase;margin-bottom:18px;}
+    .hero h1{font-family:'Google Sans',Arial,sans-serif;font-size:30px;font-weight:700;color:#1a1a2e;margin-bottom:8px;line-height:1.25;}
+    .hero h2{font-family:'Google Sans',Arial,sans-serif;font-size:17px;font-weight:500;color:#555;margin-bottom:22px;font-style:italic;}
+    .authors{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 28px;margin-bottom:10px;}
+    .author{font-size:15px;color:#209CEE;font-weight:600;}
+    .proj-line{font-size:13.5px;color:#666;margin-bottom:28px;}
+    .proj-line b{color:#363636;font-style:normal;}
+    .buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;transition:transform .15s,box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.13);}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 5px 14px rgba(0,0,0,.18);}
+    .btn-pdf{background:#C0392B;color:#fff;}
+    .btn-docx{background:#2471A3;color:#fff;}
+    .btn-gh{background:#24292e;color:#fff;}
+
+    /* CONTAINER */
+    .container{max-width:860px;margin:0 auto;padding:0 24px;}
+
+    /* SECTION */
+    .section{padding:44px 0 20px;border-bottom:1px solid #f0f0f0;}
+    .section:last-child{border-bottom:none;}
+    .sec-title{font-family:'Google Sans',Arial,sans-serif;font-size:21px;font-weight:700;color:#1a1a2e;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .sec-num{background:#209CEE;color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+
+    /* OBJECTIVE */
+    .obj-box{font-size:15.5px;line-height:1.8;text-align:justify;color:#444;background:#f7fbff;border-left:4px solid #209CEE;padding:16px 20px;border-radius:0 8px 8px 0;}
+
+    /* FIGURE */
+    .fig-wrap{margin:10px 0 8px;text-align:center;}
+    .fig-wrap img{width:100%;max-width:700px;border-radius:10px;box-shadow:0 4px 22px rgba(0,0,0,.13);border:1px solid #e0e0e0;display:block;margin:0 auto;}
+    .fig-cap{margin-top:10px;font-size:13.5px;color:#555;font-style:italic;}
+
+    /* TABLE */
+    .tbl-wrap{overflow-x:auto;margin-top:12px;}
+    table{width:100%;border-collapse:collapse;font-size:14px;}
+    thead th{background:#1a1a2e;color:#fff;padding:10px 12px;text-align:left;font-size:13px;border:1px solid #1a1a2e;}
+    tbody td{padding:9px 12px;border:1px solid #dde3ec;vertical-align:top;line-height:1.5;}
+    tbody tr:nth-child(even) td{background:#f2f6fb;}
+    tbody td:first-child{font-weight:700;color:#1a1a2e;}
+    .qty{text-align:center;font-weight:700;}
+
+    /* BUILD LOG */
+    .blog thead th{background:#2C3E50;border-color:#2C3E50;}
+    .blog tbody td:first-child{background:#EBF5FB;width:20%;}
+
+    /* BULLETS */
+    .blist{list-style:none;display:flex;flex-direction:column;gap:11px;margin-top:10px;}
+    .blist li{display:flex;gap:12px;padding:12px 16px;background:#f8f9fa;border-radius:8px;border-left:3px solid #209CEE;font-size:15px;line-height:1.65;text-align:justify;}
+    .blist li b{color:#1a1a2e;}
+    .bdot{color:#209CEE;font-size:18px;flex-shrink:0;line-height:1.5;}
+
+    /* DOC INFO GRID */
+    .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:12px;}
+    .info-card{background:#f8f9fa;border:1px solid #dde5f0;border-radius:8px;padding:14px 16px;}
+    .info-card .lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:#209CEE;margin-bottom:4px;}
+    .info-card .val{font-size:14px;color:#1a1a2e;font-weight:600;line-height:1.4;}
+
+    /* BIBTEX */
+    .bib-box{background:#1e1e2e;color:#cdd6f4;border-radius:10px;padding:20px 24px;font-family:'Courier New',Consolas,monospace;font-size:12.5px;line-height:1.75;overflow-x:auto;white-space:pre;margin-top:12px;box-shadow:0 4px 18px rgba(0,0,0,.15);}
+    .bk{color:#89DCEB;} .bf{color:#CBA6F7;} .bv{color:#A6E3A1;}
+
+    /* FOOTER */
+    footer{background:#1a1a2e;color:#aaa;text-align:center;padding:30px 24px;font-size:13px;margin-top:16px;}
+    footer a{color:#209CEE;text-decoration:none;}
+
+    @media(max-width:640px){
+      .hero h1{font-size:22px;} nav{height:auto;padding:10px 16px;flex-direction:column;gap:6px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">WMR Build Logbook</a>
+  <div class="nav-links">
+    <a href="#obj">Objective</a>
+    <a href="#robot">Robot</a>
+    <a href="#mat">Materials</a>
+    <a href="#mech">Assembly</a>
+    <a href="#elec">Electrical</a>
+    <a href="#soft">Software</a>
+    <a href="#blog">Build Log</a>
+    <a href="#cite">Cite</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Hardware Build Logbook</div>
+  <h1>Custom Differential-Drive<br>Wheeled Mobile Robot (WMR)</h1>
+  <h2>A Lightweight Fusion-based Approach for Autonomous Indoor Boundary Mapping</h2>
+  <div class="authors">
+    <span class="author">Nilay Mande</span>
+    <span class="author">Keshav Kr Singh</span>
+    <span class="author">Jinesh Machchhar</span>
+    <span class="author">Narendra Kumar Dhar</span>
+  </div>
+  <div class="proj-line">
+    <b>Document No.:</b> WMR-BL-001 &nbsp;·&nbsp;
+    <b>Revision:</b> 1.0 &nbsp;·&nbsp;
+    <b>Conference:</b> ICCAS 2026
+  </div>
+  <div class="buttons">
+    <a class="btn btn-pdf"  href="WMR_Build_Logbook.pdf"  download>📄 Download PDF</a>
+    <a class="btn btn-docx" href="WMR_Build_Logbook.docx" download>📝 Download Word</a>
+    <a class="btn btn-gh"   href="https://github.com/yourusername/wmr-build-logbook" target="_blank">🐱 GitHub Repo</a>
+  </div>
+</section>
+
+<div class="container">
+
+<!-- 1. OBJECTIVE -->
+<div class="section" id="obj">
+  <div class="sec-title"><div class="sec-num">1</div>Objective</div>
+  <div class="obj-box">
+    This logbook documents the design and construction of a custom-built wheeled mobile robot (WMR)
+    developed for low-cost indoor boundary mapping. The platform utilizes dual optical flow odometry,
+    a MEMS gyroscope, and ultrasonic ranging on a single onboard controller, enabling high-frequency
+    dead reckoning and wall-following navigation under strict cost and compute constraints.
+  </div>
+</div>
+
+<!-- FIGURE -->
+<div class="section" id="robot">
+  <div class="sec-title"><div class="sec-num" style="background:#555;font-size:15px;">📷</div>Hardware Overview</div>
+  <div class="fig-wrap">
+    <img src="System_spec.jpg" alt="Custom-built WMR with all hardware components labeled">
+    <div class="fig-cap">Figure 1. Custom-built WMR with all hardware components labeled.</div>
+  </div>
+</div>
+
+<!-- 2. MATERIALS -->
+<div class="section" id="mat">
+  <div class="sec-title"><div class="sec-num">2</div>Materials</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Component</th><th>Specification</th><th>Qty</th><th>Function</th></tr></thead>
+      <tbody>
+        <tr><td>Chassis</td><td>Acrylic plate</td><td class="qty">1</td><td>Compact mounting for all mechanical and electronic parts</td></tr>
+        <tr><td>Onboard computer</td><td>Raspberry Pi 5</td><td class="qty">1</td><td>Sensor polling, data logging, actuation, 100 Hz fusion</td></tr>
+        <tr><td>Motor driver</td><td>L298N dual H-bridge</td><td class="qty">1</td><td>Receives PWM from Pi 5, drives the two motors</td></tr>
+        <tr><td>Drive motors</td><td>DC gear motors</td><td class="qty">2</td><td>Differential drive, forward motion, and steering</td></tr>
+        <tr><td>Power</td><td>11.1 V Li-ion battery + switch</td><td class="qty">1</td><td>System power via integrated power switch</td></tr>
+        <tr><td>Optical flow</td><td>USB optical mouse sensors, 8000 DPI</td><td class="qty">2</td><td>Planar displacement (OFS1, OFS2) for dead reckoning</td></tr>
+        <tr><td>OFS mount</td><td>Shared acrylic plate (underside)</td><td class="qty">1</td><td>Near-constant ground contact, and baseline d = 99.51 mm</td></tr>
+        <tr><td>Gyroscope (IMU)</td><td>SmartElex ISM330DHCX</td><td class="qty">1</td><td>Continuous yaw rate is fused to reduce rotational drift</td></tr>
+        <tr><td>Range sensors (Ultrasonic)</td><td>HC-SR04 ultrasonic</td><td class="qty">4</td><td>Front, rear, and lateral ranging for wall following &amp; mapping</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 3. MECHANICAL -->
+<div class="section" id="mech">
+  <div class="sec-title"><div class="sec-num">3</div>Mechanical Assembly</div>
+  <ul class="blist">
+    <li><span class="bdot">•</span><span><b>Locomotion:</b> two DC gear motors mounted on a rigid base plate in a differential-drive configuration. Forward motion and steering are achieved through differential speed control.</span></li>
+    <li><span class="bdot">•</span><span><b>Optical flow unit:</b> OFS1 and OFS2 are fixed to a shared acrylic plate on the chassis underside in near-constant ground contact. Reference points are separated by a caliper-measured baseline d = 99.51 mm, with the sensing x-axis aligned to the robot's forward direction.</span></li>
+    <li><span class="bdot">•</span><span><b>Perception sensors:</b> The ISM330DHCX IMU is rigidly mounted on the chassis. HC-SR04 units face the front, rear, and lateral sides for wall following and boundary-point extraction.</span></li>
+  </ul>
+</div>
+
+<!-- 4. ELECTRICAL -->
+<div class="section" id="elec">
+  <div class="sec-title"><div class="sec-num">4</div>Electrical and Wiring</div>
+  <ul class="blist">
+    <li><span class="bdot">•</span><span><b>Actuation:</b> Raspberry Pi 5 GPIO supplies PWM and direction signals to the L298N dual H-bridge, whose outputs drive the two DC motors.</span></li>
+    <li><span class="bdot">•</span><span><b>Power:</b> The 11.1 V Li-ion battery powers the motor supply via an integrated switch, with a regulated 5 V rail powering the sensors, while a power bank supplies power to the Raspberry Pi 5.</span></li>
+    <li><span class="bdot">•</span><span><b>Sensor interfaces:</b> OFS1/OFS2 via USB, the ISM330DHCX via I²C, and the HC-SR04 trigger/echo lines via GPIO.</span></li>
+  </ul>
+</div>
+
+<!-- 5. SOFTWARE -->
+<div class="section" id="soft">
+  <div class="sec-title"><div class="sec-num">5</div>Software, Data Logging, and Calibration</div>
+  <ul class="blist">
+    <li><span class="bdot">•</span><span><b>Fusion and logging:</b> the Pi 5 polls all sensors and logs timestamped data. Optical-flow displacement and gyroscopic yaw rate are fused at 100 Hz (Δt = 0.01 s). Poses and projected boundary points are stored for offline trajectory reconstruction.</span></li>
+    <li><span class="bdot">•</span><span><b>Per-trial calibration:</b> OFS scale factors are obtained as s = C_avg / d_s by translating the sensors on a uniform section of the test surface. Two fixed end points (mechanical stoppers) were positioned at a precisely measured distance (d_s) apart. The sensors were repeatedly moved between these stoppers, ensuring that each traversal covered the same known distance along a reference flat vertical surface. Multiple trials were conducted, and the corresponding sensor counts were recorded to determine the average number (C_avg) of units measured.</span></li>
+    <li><span class="bdot">•</span><span>The gyroscope bias b is estimated under stationary conditions before each run, and the OFS baseline d is measured using callipers.</span></li>
+  </ul>
+</div>
+
+<!-- 6. BUILD LOG -->
+<div class="section" id="blog">
+  <div class="sec-title"><div class="sec-num">6</div>Build Log</div>
+  <div class="tbl-wrap">
+    <table class="blog">
+      <thead><tr><th>Build phase</th><th>Activity</th></tr></thead>
+      <tbody>
+        <tr><td>Mechanical</td><td>Assembled base plate, mounted DC gear motors in differential layout, fitted drive wheels and caster, attached OFS acrylic plate to underside.</td></tr>
+        <tr><td>Electrical</td><td>Wired Pi 5 to L298N (PWM + direction), connected motor outputs, battery, and power switch, and verified 5 V rail and motor actuation.</td></tr>
+        <tr><td>Sensors</td><td>Integrated OFS1/OFS2 (USB), ISM330DHCX (I²C), and HC-SR04 array (GPIO), and confirmed polling and 100 Hz logging.</td></tr>
+        <tr><td>Calibration</td><td>Measured OFS baseline (99.51 mm), computed per-axis scale factors, and estimated gyro bias under stationary conditions.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- DOC INFO -->
+<div class="section">
+  <div class="sec-title"><div class="sec-num" style="background:#555;font-size:15px;">ℹ</div>Document Information</div>
+  <div class="info-grid">
+    <div class="info-card"><div class="lbl">Document No.</div><div class="val">WMR-BL-001</div></div>
+    <div class="info-card"><div class="lbl">Revision</div><div class="val">1.0</div></div>
+    <div class="info-card"><div class="lbl">Conference</div><div class="val">ICCAS 2026</div></div>
+    <div class="info-card"><div class="lbl">Authors</div><div class="val" style="font-size:12.5px;">Nilay Mande, Keshav Kr Singh,<br>Jinesh Machchhar, Narendra Kumar Dhar</div></div>
+  </div>
+</div>
+
+<!-- BIBTEX -->
+<div class="section" id="cite">
+  <div class="sec-title"><div class="sec-num" style="background:#6c3483;font-size:11px;">BIB</div>BibTeX Citation</div>
+  <p style="font-size:14px;color:#666;margin-bottom:6px;">If you use this build documentation, please cite:</p>
+  <div class="bib-box"><span class="bk">@techreport</span>{logbook,
+  <span class="bf">author</span>      = {<span class="bv">Mande, Nilay and Singh, Keshav Kr and
+                 Machchhar, Jinesh and Dhar, Narendra Kumar</span>},
+  <span class="bf">title</span>       = {<span class="bv">Hardware Build Logbook: Custom Differential-Drive
+                 Wheeled Mobile Robot</span>},
+  <span class="bf">number</span>      = {<span class="bv">WMR-BL-001</span>},
+  <span class="bf">year</span>        = {<span class="bv">2026</span>},
+  <span class="bf">note</span>        = {<span class="bv">Available: https://yourusername.github.io/wmr-build-logbook/</span>},
+  <span class="bf">doi</span>         = {<span class="bv">10.5281/zenodo.XXXXXXX</span>}
+}</div>
+</div>
+
+</div><!-- end container -->
+
+<footer>
+  <p>Supplementary build documentation for the ICCAS 2026 manuscript:<br>
+  <i>A Lightweight Fusion-based Approach for Autonomous Indoor Boundary Mapping</i></p>
+  <p style="margin-top:10px;">
+    Page template inspired by <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
+    &nbsp;·&nbsp; Document No. WMR-BL-001 &nbsp;·&nbsp; Revision 1.0
+  </p>
+</footer>
+
+</body>
+</html>

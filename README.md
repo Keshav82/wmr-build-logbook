@@ -10,7 +10,7 @@
 
 ## 🌐 Live project page
 
-👉 **[View the full logbook here](https://yourusername.github.io/wmr-build-logbook/)**
+👉 **[View the full logbook here](https://Keshav82.github.io/wmr-build-logbook/)**
 
 ---
 

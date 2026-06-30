@@ -4,7 +4,7 @@
 
 > Supplementary build documentation for the manuscript:
 > **A Lightweight Fusion-based Approach for Autonomous Indoor Boundary Mapping**
-> Nilay Mande, Keshav Kr Singh, Jinesh Machchhar, and Narendra Kumar Dhar — ICCAS 2026
+> Nilay Mande, Keshav Kr Singh, Jinesh Machchhar, and Narendra Kumar Dhar — ACDOS 2026
 
 ---
 
@@ -69,4 +69,4 @@
 
 ---
 
-Document No. WMR-BL-001 · Revision 1.0 · ICCAS 2026
+Document No. WMR-BL-001 · Revision 1.0 · ACDOS 2026
